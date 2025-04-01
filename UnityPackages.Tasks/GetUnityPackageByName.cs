@@ -1,6 +1,5 @@
 ﻿using ICSharpCode.SharpZipLib.Tar;
 using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
 using System;
 using System.IO;
 using System.IO.Compression;
@@ -13,11 +12,8 @@ using UnityPackages.Tasks.Models;
 
 namespace UnityPackages.Tasks
 {
-    public class DownloadUnityPackage : Task
+    public class GetUnityPackageByName : GetUnityPackageTask
     {
-        private static readonly string[] ExcludeDirectories = ["arm32", "arm64", "android", "universalwindows"];
-        private static readonly string[] ExcludeExtensions = [".meta"];
-
         [Required]
         public string Name { get; set; }
 
@@ -114,7 +110,7 @@ namespace UnityPackages.Tasks
                 }
 
                 string extension = Path.GetExtension(relativePath);
-                if (ExcludeExtensions.Any(e => e == extension))
+                if (!IncludeExtensions.Any(e => e == extension))
                 {
                     continue;
                 }

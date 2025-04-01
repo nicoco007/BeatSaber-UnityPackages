@@ -82,11 +82,11 @@
     <RemoveDir Directories="$(ArtifactDir)" />
   </Target>
 
-  <UsingTask TaskName="DownloadUnityPackage" TaskFactory="TaskHostFactory" AssemblyFile="$(MSBuildThisFileDirectory)UnityPackages.Tasks\bin\$(Configuration)\UnityPackages.Tasks.dll" />
+  <UsingTask TaskName="GetUnityPackageByName" TaskFactory="TaskHostFactory" AssemblyFile="$(MSBuildThisFileDirectory)UnityPackages.Tasks\bin\$(Configuration)\UnityPackages.Tasks.dll" />
 
   <!-- Download the Unity package from UPM -->
-  <Target Name="DownloadPackage" AfterTargets="BeforeBuild" DependsOnTargets="ResolveProjectReferences">
-    <DownloadUnityPackage Name="$(UnityPackageName)" Version="$(Version)" DestinationFolder="$(ProjectDir)" Condition="!Exists('$(ProjectDir)Runtime')" />
+  <Target Name="DownloadPackage" AfterTargets="BeforeBuild" DependsOnTargets="ResolveProjectReferences" Condition="$(UnityPackageName) != ''">
+    <GetUnityPackageByName Name="$(UnityPackageName)" Version="$(Version)" DestinationFolder="$(ProjectDir)" Condition="!Exists('$(ProjectDir)Runtime')" />
 
     <ItemGroup>
       <Compile Remove="Runtime\**\*.cs" />
