@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <AppendPlatformToOutputPath>false</AppendPlatformToOutputPath>
-    <BeatSaberOutputType>Plugin</BeatSaberOutputType>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
-    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <LangVersion>12</LangVersion>
     <Nullable>disable</Nullable>
-    <PathMap>$(MSBuildProjectDirectory)\$(IntermediateOutputPath)=$(MSBuildProjectName)</PathMap>
+    <DefineConstants>$(DefineConstants);UNITY_2022_3_33;UNITY_2022_3;UNITY_2022;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER</DefineConstants>
+    <DefineConstants>$(DefineConstants);ENABLE_INPUT_SYSTEM;UNITY_OPENXR_PACKAGE;PACKAGE_DOCS_GENERATION</DefineConstants>
   </PropertyGroup>
   
   <ItemGroup>
-    <None Include="$(ProjectName).csproj.user" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)UnityPackages.Tasks\UnityPackages.Tasks.csproj" ReferenceOutputAssembly="False" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BeatSaberModdingTools.Tasks" Version="1.4.3">
+    <PackageReference Include="nicoco007.BeatSaberModdingTools.Tasks" Version="0.1.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)UnityPackages.Tasks\UnityPackages.Tasks.csproj" ReferenceOutputAssembly="False" />
   </ItemGroup>
 </Project>
