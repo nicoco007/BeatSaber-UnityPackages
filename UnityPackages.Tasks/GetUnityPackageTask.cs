@@ -4,8 +4,8 @@ namespace UnityPackages.Tasks
 {
     public abstract class GetUnityPackageTask : Task
     {
-        protected static string[] ExcludeDirectories { get; } = ["Editor", "Samples~", "Tests", "arm32", "arm64", "android", "universalwindows"];
+        public virtual string[] ExcludeDirectories { get; set; }
 
-        protected static string[] IncludeExtensions { get; } = [".cs", "*.dll"];
+        public virtual string[] IncludeExtensions { get; set; }
     }
 }

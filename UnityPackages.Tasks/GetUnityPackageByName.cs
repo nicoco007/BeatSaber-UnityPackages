@@ -19,16 +19,18 @@ namespace UnityPackages.Tasks
 
         public string Version { get; set; }
 
+        public string Source { get; set; } = "https://download.packages.unity.com";
+
         [Required]
         public string DestinationFolder { get; set; }
 
         public override bool Execute()
         {
-            Log.LogMessage(MessageImportance.High, $"Fetching information for {Name}");
+            Log.LogMessage(MessageImportance.High, $"Fetching {Name} v{Version}");
 
             using HttpClient client = new();
 
-            UnityPackageManifest packageManifest = client.GetFromJsonAsync<UnityPackageManifest>($"https://download.packages.unity.com/{Name}").GetAwaiter().GetResult();
+            UnityPackageManifest packageManifest = client.GetFromJsonAsync<UnityPackageManifest>($"{Source}/{Name}").GetAwaiter().GetResult();
 
             if (packageManifest == null)
             {
@@ -97,12 +99,6 @@ namespace UnityPackages.Tasks
                 }
 
                 string relativePath = entry.Name;
-
-                if (!relativePath.StartsWith("package/Runtime", StringComparison.Ordinal))
-                {
-                    continue;
-                }
-
                 string[] directories = relativePath.Split('/');
                 if (ExcludeDirectories.Intersect(directories, StringComparer.Ordinal).Any())
                 {

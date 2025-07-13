@@ -4,29 +4,20 @@
     <GitHubTag Condition="'$(GitHubTag)' == ''">v$(BaseVersion)</GitHubTag>
   </PropertyGroup>
 
-  <!-- Clean up Unity package files -->
-  <Target Name="CleanPackage" AfterTargets="Clean">
-    <ItemGroup>
-      <ProjectDirectories Include="$([System.IO.Directory]::GetDirectories('$(ProjectDir)'))" />
-      <DirectoriesToRemove Include="@(ProjectDirectories)" Condition="$([System.IO.Path]::GetFileName('%(Identity)')) == 'Runtime' OR $([System.IO.Directory]::GetDirectories('%(Identity)', 'Runtime', System.IO.SearchOption.AllDirectories).Length) > 0" />
-    </ItemGroup>
-
-    <RemoveDir Directories="@(DirectoriesToRemove)" />
-  </Target>
-
   <UsingTask TaskName="GetUnityPackageByName" TaskFactory="TaskHostFactory" AssemblyFile="$(MSBuildThisFileDirectory)UnityPackages.Tasks\bin\$(Configuration)\UnityPackages.Tasks.dll" />
 
   <!-- Download the Unity package from UPM -->
   <Target Name="DownloadPackage" AfterTargets="BeforeBuild" DependsOnTargets="ResolveProjectReferences" Condition="$(UnityPackageName) != ''">
-    <GetUnityPackageByName Name="$(UnityPackageName)" Version="$(UnityPackageVersion)" DestinationFolder="$(ProjectDir)" Condition="!Exists('$(ProjectDir)Runtime')" />
+    <GetUnityPackageByName Name="$(UnityPackageName)" Version="$(UnityPackageVersion)" Source="$(UnityPackageSource)" DestinationFolder="$(DownloadDestinationFolder)" IncludeExtensions="$(IncludeExtensions)" ExcludeDirectories="$(ExcludeDirectories)" Condition="!Exists('$(DownloadDestinationFolder)')" />
 
     <ItemGroup>
       <Compile Remove="**\*.cs" />
       <Compile Include="**\*.cs" Exclude="$(DefaultItemExcludes)" />
     </ItemGroup>
+  </Target>
 
-    <ItemGroup>
-      <NativeAssemblies Include="$(ProjectDir)**\*.dll" Exclude="$(DefaultItemExcludes)"></NativeAssemblies>
-    </ItemGroup>
+  <!-- Clean up downloaded files -->
+  <Target Name="CleanPackage" AfterTargets="Clean">
+    <RemoveDir Directories="$(DownloadDestinationFolder)" />
   </Target>
 </Project>
