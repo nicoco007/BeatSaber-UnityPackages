@@ -17,12 +17,10 @@ namespace UnityPackages.Tasks
         [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Version { get; set; }
 
         public string Source { get; set; } = "https://download.packages.unity.com";
-
-        [Required]
-        public string DestinationFolder { get; set; }
 
         public override bool Execute()
         {
@@ -99,19 +97,14 @@ namespace UnityPackages.Tasks
                 }
 
                 string relativePath = entry.Name;
-                string[] directories = relativePath.Split('/');
-                if (ExcludeDirectories.Intersect(directories, StringComparer.Ordinal).Any())
+                string filePath = relativePath.Substring(relativePath.IndexOf('/') + 1);
+
+                if (!IsMatch(filePath))
                 {
                     continue;
                 }
 
-                string extension = Path.GetExtension(relativePath);
-                if (!IncludeExtensions.Any(e => e == extension))
-                {
-                    continue;
-                }
-
-                string destinationFile = Path.Combine(DestinationFolder, relativePath.Substring(relativePath.IndexOf('/') + 1));
+                string destinationFile = Path.Combine(DestinationFolder, filePath);
 
                 Directory.CreateDirectory(Path.GetDirectoryName(destinationFile));
 

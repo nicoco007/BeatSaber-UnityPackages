@@ -8,16 +8,25 @@
 
   <!-- Download the Unity package from UPM -->
   <Target Name="DownloadPackage" AfterTargets="BeforeBuild" DependsOnTargets="ResolveProjectReferences" Condition="$(UnityPackageName) != ''">
-    <GetUnityPackageByName Name="$(UnityPackageName)" Version="$(UnityPackageVersion)" Source="$(UnityPackageSource)" DestinationFolder="$(DownloadDestinationFolder)" IncludeExtensions="$(IncludeExtensions)" ExcludeDirectories="$(ExcludeDirectories)" Condition="!Exists('$(DownloadDestinationFolder)')" />
+    <GetUnityPackageByName Name="$(UnityPackageName)" Version="$(UnityPackageVersion)" Source="$(UnityPackageSource)" DestinationFolder="$(DownloadDestinationFolder)" IncludeFiles="$(IncludeFiles)" ExcludeFiles="$(ExcludeFiles)" Condition="!Exists('$(DownloadDestinationFolder)')" />
 
     <ItemGroup>
-      <Compile Remove="**\*.cs" />
-      <Compile Include="**\*.cs" Exclude="$(DefaultItemExcludes)" />
+      <Compile Remove="$(DownloadDestinationFolder)\**\*.cs" />
+      <Compile Include="$(DownloadDestinationFolder)\**\*.cs" Exclude="$(DefaultItemExcludes)" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <NativeLibraryFiles Include="$(NativeLibraryFiles)"/>
     </ItemGroup>
   </Target>
 
   <!-- Clean up downloaded files -->
   <Target Name="CleanPackage" AfterTargets="Clean">
     <RemoveDir Directories="$(DownloadDestinationFolder)" />
+  </Target>
+
+  <Target Name="CopyNativeToArtifact" AfterTargets="CopyToArtifact" Condition="">
+    <MakeDir Directories="$(ArtifactDir)Libs\Native" />
+    <Copy SourceFiles="@(NativeLibraryFiles)" DestinationFolder="$(ArtifactDir)Libs\Native" />
   </Target>
 </Project>
