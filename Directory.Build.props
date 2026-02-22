@@ -12,11 +12,11 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)UnityPackages.Tasks\UnityPackages.Tasks.csproj" ReferenceOutputAssembly="False" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="nicoco007.BeatSaberModdingTools.Tasks" Version="0.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Unity.PackageManager.Tasks" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

@@ -3,9 +3,7 @@
     <UnityPackageVersion Condition="'$(UnityPackageVersion)' == ''">$(BaseVersion)</UnityPackageVersion>
     <GitHubTag Condition="'$(GitHubTag)' == ''">v$(BaseVersion)</GitHubTag>
   </PropertyGroup>
-
-  <UsingTask TaskName="GetUnityPackageByName" TaskFactory="TaskHostFactory" AssemblyFile="$(MSBuildThisFileDirectory)UnityPackages.Tasks\bin\$(Configuration)\UnityPackages.Tasks.dll" />
-
+  
   <!-- Download the Unity package from UPM -->
   <Target Name="DownloadPackage" AfterTargets="BeforeBuild" DependsOnTargets="ResolveProjectReferences" Condition="$(UnityPackageName) != ''">
     <GetUnityPackageByName Name="$(UnityPackageName)" Version="$(UnityPackageVersion)" Source="$(UnityPackageSource)" DestinationFolder="$(DownloadDestinationFolder)" IncludeFiles="$(IncludeFiles)" ExcludeFiles="$(ExcludeFiles)" Condition="!Exists('$(DownloadDestinationFolder)')" />
@@ -25,7 +23,7 @@
     <RemoveDir Directories="$(DownloadDestinationFolder)" />
   </Target>
 
-  <Target Name="CopyNativeToArtifact" AfterTargets="CopyToArtifact" Condition="">
+  <Target Name="CopyNativeToArtifact" AfterTargets="CopyToArtifact" Condition="'@(NativeLibraryFiles)' != ''">
     <MakeDir Directories="$(ArtifactDir)Libs\Native" />
     <Copy SourceFiles="@(NativeLibraryFiles)" DestinationFolder="$(ArtifactDir)Libs\Native" />
   </Target>
