@@ -6,6 +6,7 @@
     <Platforms>x64</Platforms>
     <UnityPackageName>com.unity.xr.hands</UnityPackageName>
     <BeatSaberOutputType>Library</BeatSaberOutputType>
+    <GitTagFormat>unity-xr-hands/v{0}</GitTagFormat>
   </PropertyGroup>
 
   <PropertyGroup>
