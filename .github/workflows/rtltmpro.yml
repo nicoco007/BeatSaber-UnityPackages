@@ -1,0 +1,39 @@
+name: RTLTMPro
+
+on:
+  push:
+    paths:
+    - .github/workflows/rtltmpro.yml
+    - UnityPackages.slnx
+    - RTLTMPro/**
+    - UnityPackages.Tasks/**
+    branches:
+    - '**'
+    tags:
+    - 'rtltmpro/*'
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+    - name: Check out
+      uses: actions/checkout@v7
+
+    - name: Set up Beat Saber
+      uses: nicoco007/setup-beat-saber@v1
+      with:
+        project-path: ${{ github.workspace }}\RTLTMPro\RTLTMPro.csproj
+
+    - name: Add NuGet source
+      run: dotnet nuget update source "nicoco007 GitHub Packages" --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
+
+    - name: Build Release
+      id: build-release
+      run: dotnet build ${{ github.workspace }}\RTLTMPro\RTLTMPro.csproj -c Release
+
+    - name: Upload Release
+      uses: actions/upload-artifact@v7
+      with:
+        name: ${{ steps.build-release.outputs.artifact-name }}
+        path: ${{ steps.build-release.outputs.artifact-path }}

@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UnityPackageName>com.nosuchstudio.rtltmpro</UnityPackageName>
+    <UnityPackageSource>https://package.openupm.com</UnityPackageSource>
+    <BeatSaberOutputType>Library</BeatSaberOutputType>
+    <DefineConstants>$(DefineConstants);TMP_VERSION_2_1_0_OR_NEWER</DefineConstants>
+    <Platforms>x64</Platforms>
+    <GitTagFormat>rtltmpro/v{0}</GitTagFormat>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>RTLTMPro</PackageId>
+    <Title>RTL Text Mesh Pro</Title>
+    <Authors>Mohamad Narimani</Authors>
+    <Version>3.4.5</Version>
+    <GameVersion>1.29.4</GameVersion>
+    <Description>This package adds right-to-left language support to the TextMeshPro Unity package. Supports Persian, Arabic and Hebrew.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <RequiredFile Include="Libs/RTLTMPro.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Unity.TextMeshPro" />
+    <Reference Include="UnityEngine" />
+    <Reference Include="UnityEngine.CoreModule" />
+    <Reference Include="UnityEngine.UI" />
+  </ItemGroup>
+</Project>
