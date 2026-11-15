@@ -18,7 +18,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Check out
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     - name: Set up Beat Saber
       uses: nicoco007/setup-beat-saber@v1
@@ -33,7 +33,7 @@ jobs:
       run: dotnet build ${{ github.workspace }}\Unity.XR.Hands\Unity.XR.Hands.csproj -c Release
 
     - name: Upload Release
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: ${{ steps.build-release.outputs.artifact-name }}
         path: ${{ steps.build-release.outputs.artifact-path }}
