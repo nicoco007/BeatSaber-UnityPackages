@@ -4,7 +4,7 @@ on:
   push:
     paths:
     - .github/workflows/unity-xr-hands.yml
-    - UnityPackages.sln
+    - UnityPackages.slnx
     - Unity.XR.Hands/**
     - UnityPackages.Tasks/**
     branches:
